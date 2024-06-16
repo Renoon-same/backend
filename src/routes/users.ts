@@ -1,20 +1,19 @@
-import express from 'express'
-import {insertUser} from '../service/database'
+import express from "express";
+import { insertUser } from "../database/user";
 
-const router = express.Router()
+const router = express.Router();
 
-router.get('/', async (req, res) => {
+router.get("/", async (req, res) => {
   try {
-    const data = req.body
+    const data = req.body;
     if ((await insertUser(data)).valueOf()) {
-      res.status(200).json(data)
+      res.status(200).json(data);
     } else {
-      res.status(500).json(data)
+      res.status(500).json(data);
     }
-    
   } catch (error: any) {
-    res.status(400).json( { error: error?.message } )
+    res.status(400).json({ error: error?.message });
   }
-})
+});
 
-export default router
+export default router;

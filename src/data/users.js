@@ -1,10 +1,9 @@
-const users = 
-[
+const users = [
   {
-      name: "Duy Huynh",
-      age: "22",
-      major: "Computer Science"
+    name: "Duy Huynh",
+    age: "22",
+    major: "Computer Science",
   },
-]
+];
 
-export default users
+export default users;
