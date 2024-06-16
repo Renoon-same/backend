@@ -16,9 +16,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
 
-// app.get("/", async (request, response) => {
-//   response.status(200).json({ message: "Welcome to FB Market API!" });
-// });
+app.get("/", async (request, response) => {
+  response.status(200).json({ message: "Welcome to FB Market API!" });
+});
 
 // Specify the api path for the server to use
 app.use("/users", usersRouter);

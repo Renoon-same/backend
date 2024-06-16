@@ -42,8 +42,8 @@ coverage/
 bower_components/
 
 # Compiled source files
-dist/
-build/
+*/dist/
+*/build/
 
 # TypeScript cache
 *.tsbuildinfo
