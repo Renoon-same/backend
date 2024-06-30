@@ -1,9 +1,9 @@
 import { MongoClient, ServerApiVersion } from "mongodb";
 
-const DB_USER = (process.env.DB_USER as string) || "";
-const DB_PASSWORD = (process.env.DB_PASSWORD as string) || "";
+const DB_USER = process.env.DB_USER as string;
+const DB_PASSWORD = process.env.DB_PASSWORD as string;
 const CLUSTER_URL = "cluster0";
-const DB_NAME = (process.env.DB_NAME as string) || "test";
+const DB_NAME = process.env.DB_NAME as string;
 
 const MONGODB_URI = `mongodb+srv://${DB_USER}:${DB_PASSWORD}@${CLUSTER_URL}.povokmt.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 
