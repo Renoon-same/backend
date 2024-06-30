@@ -1,8 +1,7 @@
-import express from "express";
+import express, { Request, Response, NextFunction } from "express";
 import cors from "cors";
 import "./config/dotenv";
-import { connectMongoDB, disconnectMongoDB } from "./database/database";
-import path from "path";
+import { disconnectMongoDB } from "./database/database";
 
 // import the router from routes file
 import usersRouter from "./routes/users";
@@ -24,9 +23,12 @@ app.get("/", async (request, response) => {
 app.use("/users", usersRouter);
 app.use("/cards", cardsRouter);
 
-// Connect to MongoDB
-connectMongoDB().catch(console.dir);
+// Global error handling
+app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
+  res.status(500).send("Uh oh! An unexpected error occurred.");
+});
 
+// Start the Express server
 app.listen(PORT, () => {
   console.log(`server listening on http://localhost:${PORT}`);
 });

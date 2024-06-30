@@ -1,18 +1,11 @@
 import { MongoClient, ServerApiVersion } from "mongodb";
 
-const DB_USER = process.env.DB_USER as string;
-const DB_PASSWORD = process.env.DB_PASSWORD as string;
-const cluster_url = "cluster0";
-const DB_NAME = "admindb";
+const DB_USER = (process.env.DB_USER as string) || "";
+const DB_PASSWORD = (process.env.DB_PASSWORD as string) || "";
+const CLUSTER_URL = "cluster0";
+const DB_NAME = (process.env.DB_NAME as string) || "test";
 
-const MONGODB_URI =
-  "mongodb+srv://" +
-  DB_USER +
-  ":" +
-  DB_PASSWORD +
-  "@" +
-  cluster_url +
-  ".povokmt.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+const MONGODB_URI = `mongodb+srv://${DB_USER}:${DB_PASSWORD}@${CLUSTER_URL}.povokmt.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 
 const client = new MongoClient(MONGODB_URI, {
   serverApi: {
@@ -22,15 +15,10 @@ const client = new MongoClient(MONGODB_URI, {
   },
 });
 
-export const getMongoDBClient = () => {
-  return client;
-};
-
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
-export const connectMongoDB = async () => {
+async function connectMongoDB() {
   try {
     await client.connect();
-
     // Send a ping to confirm a successful connection
     await client.db(DB_NAME).command({ ping: 1 });
     console.log("Successfully connected to MongoDB!");
@@ -38,8 +26,9 @@ export const connectMongoDB = async () => {
     console.error("Database connection error:", error);
     process.exit(1); // Exit process with failure
   }
-};
+}
 
+// Disconnect a MongoClient when finish
 export const disconnectMongoDB = async (signal: string) => {
   console.log(`Received ${signal}. Closing MongoDB connection...`);
   try {
@@ -50,3 +39,8 @@ export const disconnectMongoDB = async (signal: string) => {
     process.exit(1); // Exit process with failure
   }
 };
+
+connectMongoDB().catch(console.error);
+let db = client.db(DB_NAME);
+
+export default db;

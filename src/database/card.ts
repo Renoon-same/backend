@@ -1,20 +1,12 @@
-import Card from "../schemas/Card";
-import { getMongoDBClient } from "./database";
+import db from "./database";
 
-const dbClient = getMongoDBClient();
-const dbName = "carddb";
-const collectionName = "Card";
+const collectionName = "cards";
 
-export async function insertCard(data: Card[]) {
-  await dbClient.connect();
-  const database = dbClient.db(dbName);
-  const collection = database.collection(collectionName);
+export async function getCards() {
   try {
-    const insertManyResult = await collection.insertMany(data);
-    console.log(`${insertManyResult.insertedCount} documents successfully inserted.\n`);
-    return true;
+    const collection = await db.collection(collectionName);
+    return await collection.find({}).limit(50).toArray();
   } catch (err) {
-    console.error(`Something went wrong trying to insert the new documents: ${err}\n`);
-    return false;
+    console.error(`Something went wrong trying to retrieve cards data: ${err}\n`);
   }
 }
