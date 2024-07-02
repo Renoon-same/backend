@@ -5,7 +5,8 @@ import { disconnectMongoDB } from "./database/database";
 
 // import the router from routes file
 import usersRouter from "./routes/users";
-import cardsRouter from "./routes/cards";
+import itemRouter from "./routes/items";
+import commentRouter from "./routes/comments";
 
 const PORT = process.env.PORT || 8080;
 
@@ -21,7 +22,8 @@ app.get("/", async (request, response) => {
 
 // Specify the api path for the server to use
 app.use("/users", usersRouter);
-app.use("/cards", cardsRouter);
+app.use("/items", itemRouter);
+app.use("/comments", commentRouter);
 
 // Global error handling
 app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
