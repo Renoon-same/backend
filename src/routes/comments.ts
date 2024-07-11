@@ -9,12 +9,12 @@ router.get("/", async (req, res) => {
     const comments = await getComments();
 
     if (comments.length > 0) {
-      res.status(200).json(comments);
+      return res.status(200).json(comments);
     } else {
-      res.status(404).json({ message: "There are no available comments" });
+      return res.status(404);
     }
   } catch (error: any) {
-    res.status(400).json({ error: error?.message });
+    return res.status(500).json({ error: error?.message });
   }
 });
 

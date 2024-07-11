@@ -9,12 +9,12 @@ router.get("/", async (req, res) => {
     const items = await getItems();
 
     if (items.length > 0) {
-      res.status(200).json(items);
+      return res.status(200).json(items);
     } else {
-      res.status(404).json({ message: "There are no available items" });
+      return res.status(404);
     }
   } catch (error: any) {
-    res.status(400).json({ error: error?.message });
+    return res.status(500).json({ error: error?.message });
   }
 });
 

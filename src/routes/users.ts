@@ -9,12 +9,12 @@ router.get("/", async (req, res) => {
     const users = await getUsers();
 
     if (users.length > 0) {
-      res.status(200).json(users);
+      return res.status(200).json(users);
     } else {
-      res.status(404).json({ message: "There are no available users" });
+      return res.status(404);
     }
   } catch (error: any) {
-    res.status(400).json({ error: error?.message });
+    return res.status(500).json({ error: error?.message });
   }
 });
 
@@ -32,9 +32,9 @@ router.post("/", async (req, res) => {
       phone,
     });
 
-    res.status(201).json(newUser);
+    return res.status(201).json(newUser);
   } catch (error: any) {
-    res.status(400).json({ error: error?.message });
+    return res.status(500).json({ error: error?.message });
   }
 });
 
