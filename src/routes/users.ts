@@ -14,7 +14,7 @@ router.get("/", async (req, res) => {
       return res.status(404);
     }
   } catch (error: any) {
-    return res.status(500).json({ error: error?.message });
+    return res.status(500).json({ error: "Internal Error" });
   }
 });
 
@@ -34,7 +34,7 @@ router.post("/", async (req, res) => {
 
     return res.status(201).json(newUser);
   } catch (error: any) {
-    return res.status(500).json({ error: error?.message });
+    return res.status(500).json({ error: "Internal Error" });
   }
 });
 
