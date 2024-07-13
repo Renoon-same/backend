@@ -10,7 +10,8 @@ export interface IUser extends Document {
   username: string;
   email: string;
   password: string;
-  phone: number;
+  socialUrl?: string;
+  phone?: number;
   class?: number;
   location?: string;
   avatar?: Buffer;
@@ -31,13 +32,14 @@ const userSchema: Schema<IUser> = new Schema(
     username: { type: String, required: true, unique: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    phone: { type: Number, required: true },
+    socialUrl: { type: String },
+    phone: { type: Number },
     class: { type: Number },
     location: { type: String },
     avatar: { type: Buffer },
     favList: [{ type: Schema.Types.ObjectId, ref: "Item" }],
-    createdAt: { type: Date, default: Date.now },
-    lastLogIn: { type: Date, default: Date.now },
+    createdAt: { type: Date, default: () => Date.now(), immutable: true },
+    lastLogIn: { type: Date, default: () => Date.now() },
     sellingList: [{ type: Schema.Types.ObjectId, ref: "Item" }],
     buyingList: [{ type: Schema.Types.ObjectId, ref: "Item" }],
   },
