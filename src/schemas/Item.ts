@@ -1,4 +1,5 @@
 import mongoose, { Schema, Document } from "mongoose";
+import { IUser } from "./User";
 
 // Enum for status
 enum ItemStatus {
@@ -23,14 +24,14 @@ enum ItemCategory {
 export interface IItem extends Document {
   name: string;
   price: number;
-  description: string;
-  image: Buffer;
+  description?: string;
+  image?: Buffer;
   category: ItemCategory;
-  createdBy: number; // userId
+  createdBy: IUser["_id"];
   createdAt: Date;
   lastModified: Date;
   status: ItemStatus;
-  payPeriod?: number;
+  payPeriod: number;
 }
 
 // Define Item schema
@@ -38,12 +39,12 @@ const itemSchema: Schema<IItem> = new Schema(
   {
     name: { type: String, required: true },
     price: { type: Number, required: true },
-    description: { type: String, required: true },
+    description: { type: String },
     image: { type: Buffer },
     category: { type: String, enum: Object.values(ItemCategory), required: true },
-    createdBy: { type: Number, required: true }, // userId
-    createdAt: { type: Date, default: Date.now },
-    lastModified: { type: Date, default: Date.now },
+    createdBy: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    createdAt: { type: Date, default: () => Date.now(), immutable: true },
+    lastModified: { type: Date, default: () => Date.now() },
     status: { type: String, enum: Object.values(ItemStatus), default: ItemStatus.Available },
     payPeriod: { type: Number, default: 7 },
   },
